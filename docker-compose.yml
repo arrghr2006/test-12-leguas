@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  ### Base de datos postgres para taller-service
+  db_taller:
+    container_name: db_taller
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db_taller
+      POSTGRES_USER: usertaller
+      POSTGRES_PASSWORD: Test-1234
+    ports:
+      - '5431:5431'
+    expose:
+      - 5431
+    command: -p 5431
+
+  vehiculos-service:
+    container_name: vehiculos-service
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    links:
+      - db_taller
+    expose:
+      - 8088

@@ -1,0 +1,33 @@
+package com.taller.vehiculosservice.model.dto;
+
+import com.taller.vehiculosservice.model.enumtypes.TipoBombaInyeccionEnum;
+import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class VehiculoGasolinaDTOOut extends VehiculoDTOOut {
+
+    private String matricula;
+
+    private String tiposGasolina;
+
+    public VehiculoGasolinaDTOOut(String info){
+        super(info);
+    }
+    @Override
+    protected void construyeDesdeString(String info){
+        setTipo(TipoVehiculoEnum.GASOLINA);
+        if(info!=null && !info.isEmpty()){
+            String[] infoSplitted = info.split(",");
+            if(infoSplitted.length==2){
+                setMatricula(infoSplitted[0]);
+                setTiposGasolina(infoSplitted[1]);
+            }
+        }
+    }
+}
