@@ -13,6 +13,7 @@ public class VehiculoElectricoDTOUtil {
         VehiculoElectricoDTO dto = new VehiculoElectricoDTO();
         dto.setVin(entity.getVin());
         dto.setMatricula(entity.getMatricula());
+        dto.setTipo(entity.getTipo().toString());
         dto.setCorriente(entity.getCorriente());
         dto.setVoltaje(entity.getVoltaje());
         dto.setTipoBateria(entity.getTipoBateria().toString());
@@ -28,9 +29,9 @@ public class VehiculoElectricoDTOUtil {
         entity.setTipo(TipoVehiculoEnum.ELECTRICO);
         entity.setCorriente(dto.getCorriente());
         entity.setVoltaje(dto.getVoltaje());
-        entity.setTipoBateria(TipoBateriaEnum.valueOf(dto.getTipoBateria()));
+        entity.setTipoBateria(TipoBateriaEnum.valueOf(dto.getTipoBateria().trim().toUpperCase()));
         entity.setReconvertir(dto.getReconvertir()!=null ? dto.getReconvertir() : Boolean.FALSE);
-        entity.setTipoReconvertido( dto.getTipoReconvertido()!=null ? TipoVehiculoEnum.valueOf(dto.getTipoReconvertido()) : null);
+        entity.setTipoReconvertido( dto.getTipoReconvertido()!=null ? TipoVehiculoEnum.valueOf(dto.getTipoReconvertido().trim().toUpperCase()) : null);
 
         return entity;
     }

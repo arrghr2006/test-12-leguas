@@ -13,6 +13,7 @@ public class VehiculoDieselDTOUtil {
         VehiculoDieselDTO dto = new VehiculoDieselDTO();
         dto.setVin(entity.getVin());
         dto.setMatricula(entity.getMatricula());
+        dto.setTipo(entity.getTipo().toString());
         dto.setTipoBombaInyeccion( entity.getTipoBombaInyeccion().toString());
         return dto;
     }
@@ -22,7 +23,7 @@ public class VehiculoDieselDTOUtil {
         entity.setVin(dto.getVin());
         entity.setMatricula(dto.getMatricula());
         entity.setTipo(TipoVehiculoEnum.DIESEL);
-        entity.setTipoBombaInyeccion( dto.getTipoBombaInyeccion()!=null ? TipoBombaInyeccionEnum.valueOf(dto.getTipoBombaInyeccion()) : null);
+        entity.setTipoBombaInyeccion( dto.getTipoBombaInyeccion()!=null ? TipoBombaInyeccionEnum.valueOf(dto.getTipoBombaInyeccion().trim().toUpperCase()) : null);
 
         return entity;
     }

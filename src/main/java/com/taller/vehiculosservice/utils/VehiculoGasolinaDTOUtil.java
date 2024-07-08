@@ -13,6 +13,7 @@ public class VehiculoGasolinaDTOUtil {
         VehiculoGasolinaDTO dto = new VehiculoGasolinaDTO();
         dto.setVin(entity.getVin());
         dto.setMatricula(entity.getMatricula());
+        dto.setTipo(entity.getTipo().toString());
         dto.setTiposGasolina( entity.getTiposGasolina());
         return dto;
     }
@@ -23,7 +24,7 @@ public class VehiculoGasolinaDTOUtil {
         entity.setMatricula(dto.getMatricula());
         entity.setTipo(TipoVehiculoEnum.GASOLINA);
 
-        String tiposGasolinaIn = dto.getTiposGasolina().toUpperCase();
+        String tiposGasolinaIn = dto.getTiposGasolina()==null ? "" : dto.getTiposGasolina().toUpperCase();
         String tiposGasolinaOut = tiposGasolinaIn.contains(TipoGasolinaEnum.B83.toString()) ? TipoGasolinaEnum.B83.toString() : "";
         if(tiposGasolinaIn.contains(TipoGasolinaEnum.B90.toString())){
             tiposGasolinaOut = tiposGasolinaOut.concat(

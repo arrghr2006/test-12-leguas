@@ -9,3 +9,5 @@ Para el modelado de las entidades JPA se utilizó una estrategia de herencia tip
 <img src="./deer.png" alt="DER" width="1200">
 
 Se ofrece una coleccion de **Postman** para las pruebas de las API.
+
+**apiDoc url**: http://localhost:8088/swagger-ui/index.html
