@@ -5,9 +5,11 @@ import com.taller.vehiculosservice.exception.ErrorMessage;
 import com.taller.vehiculosservice.exception.RequestException;
 import com.taller.vehiculosservice.model.dto.VehiculoGasolinaDTO;
 import com.taller.vehiculosservice.model.persistencia.Vehiculo;
+import com.taller.vehiculosservice.model.persistencia.VehiculoElectrico;
 import com.taller.vehiculosservice.model.persistencia.VehiculoGasolina;
 import com.taller.vehiculosservice.repository.VehiculoGasolinaRepository;
 import com.taller.vehiculosservice.repository.VehiculoRepository;
+import com.taller.vehiculosservice.utils.VehiculoElectricoDTOUtil;
 import com.taller.vehiculosservice.utils.VehiculoGasolinaDTOUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,7 +50,7 @@ public class VehiculoGasolinaService implements VehiculoGasolinaServiceInterface
                                         ErrorMessage.RECONVERSION_NO_PERMITIDA, HttpStatus.BAD_REQUEST.name());
         }
         try {
-            return VehiculoGasolinaDTOUtil.toDTO(vehiculoRepository.save(VehiculoGasolinaDTOUtil.toEntity(dto)));
+            return VehiculoGasolinaDTOUtil.toDTO(vehiculoGasolinaRepository.save(VehiculoGasolinaDTOUtil.toEntity(dto)));
         }catch (DataIntegrityViolationException exc){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.VALIDATION_PARAMS,
                                         ErrorMessage.VALIDATION_PARAMS, HttpStatus.BAD_REQUEST.name());
@@ -59,14 +61,16 @@ public class VehiculoGasolinaService implements VehiculoGasolinaServiceInterface
         Optional<VehiculoGasolina> entity = vehiculoGasolinaRepository.findById(id);
         if(entity.isEmpty()){
             throw new RequestException( ErrorCode.VEHICLE_NOT_FOUND, ErrorMessage.VEHICLE_NOT_FOUND,
-                                        ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.BAD_REQUEST.name());
+                                        ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.NOT_FOUND.name());
         }
         if(dto.getReconvertir()!=null && dto.getReconvertir().equals(Boolean.TRUE)){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.RECONVERSION_NO_PERMITIDA,
                     ErrorMessage.RECONVERSION_NO_PERMITIDA, HttpStatus.BAD_REQUEST.name());
         }
         try {
-            return VehiculoGasolinaDTOUtil.toDTO(vehiculoRepository.save(VehiculoGasolinaDTOUtil.toEntity(dto)));
+            VehiculoGasolina vehiculo = VehiculoGasolinaDTOUtil.toEntity(dto);
+            vehiculo.setId(id);
+            return VehiculoGasolinaDTOUtil.toDTO(vehiculoGasolinaRepository.save(vehiculo));
         }catch (DataIntegrityViolationException exc){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.VALIDATION_PARAMS,
                                         ErrorMessage.VALIDATION_PARAMS, HttpStatus.BAD_REQUEST.name());

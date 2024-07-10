@@ -47,7 +47,7 @@ public class VehiculoDieselService implements VehiculoDieselServiceInterface {
                                         ErrorMessage.RECONVERSION_NO_PERMITIDA, HttpStatus.BAD_REQUEST.name());
         }
         try {
-            return VehiculoDieselDTOUtil.toDTO(vehiculoRepository.save(VehiculoDieselDTOUtil.toEntity(dto)));
+            return VehiculoDieselDTOUtil.toDTO(vehiculoDieselRepository.save(VehiculoDieselDTOUtil.toEntity(dto)));
         }catch (IllegalArgumentException exc){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.VALIDATION_PARAMS,
                                         ErrorMessage.VALIDATION_PARAMS, HttpStatus.BAD_REQUEST.name());
@@ -58,14 +58,16 @@ public class VehiculoDieselService implements VehiculoDieselServiceInterface {
         Optional<VehiculoDiesel> entity = vehiculoDieselRepository.findById(id);
         if(entity.isEmpty()){
             throw new RequestException( ErrorCode.VEHICLE_NOT_FOUND, ErrorMessage.VEHICLE_NOT_FOUND,
-                                        ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.BAD_REQUEST.name());
+                                        ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.NOT_FOUND.name());
         }
         if(dto.getReconvertir()!=null && dto.getReconvertir().equals(Boolean.TRUE)){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.RECONVERSION_NO_PERMITIDA,
                     ErrorMessage.RECONVERSION_NO_PERMITIDA, HttpStatus.BAD_REQUEST.name());
         }
         try {
-            return VehiculoDieselDTOUtil.toDTO(vehiculoRepository.save(VehiculoDieselDTOUtil.toEntity(dto)));
+            VehiculoDiesel vehiculo = VehiculoDieselDTOUtil.toEntity(dto);
+            vehiculo.setId(id);
+            return VehiculoDieselDTOUtil.toDTO(vehiculoDieselRepository.save(vehiculo));
         }catch (IllegalArgumentException exc){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.VALIDATION_PARAMS,
                                         ErrorMessage.VALIDATION_PARAMS, HttpStatus.BAD_REQUEST.name());

@@ -28,12 +28,12 @@ public class VehiculoElectricoService implements VehiculoElectricoServiceInterfa
     }
 
     public VehiculoElectricoDTO getById(Integer id) throws RequestException {
-        Optional<VehiculoElectrico> inventory = vehiculoElectricoRepository.findById(id);
-        if(inventory.isEmpty()) {
+        Optional<VehiculoElectrico> vehiculo = vehiculoElectricoRepository.findById(id);
+        if(vehiculo.isEmpty()) {
             throw new RequestException( ErrorCode.VEHICLE_NOT_FOUND, ErrorMessage.VEHICLE_NOT_FOUND,
                                         ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.NOT_FOUND.name());
         }
-        return inventory.map(VehiculoElectricoDTOUtil::toDTO).get();
+        return vehiculo.map(VehiculoElectricoDTOUtil::toDTO).get();
     }
 
     private Boolean getReconversionValida(VehiculoElectricoDTO dto){
@@ -65,14 +65,16 @@ public class VehiculoElectricoService implements VehiculoElectricoServiceInterfa
         Optional<VehiculoElectrico> entity = vehiculoElectricoRepository.findById(id);
         if(entity.isEmpty()){
             throw new RequestException( ErrorCode.VEHICLE_NOT_FOUND, ErrorMessage.VEHICLE_NOT_FOUND,
-                                        ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.BAD_REQUEST.name());
+                                        ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.NOT_FOUND.name());
         }
         if(Boolean.FALSE.equals(this.getReconversionValida(dto))) {
-            throw new RequestException(ErrorCode.BAD_REQUEST, ErrorMessage.RECONVERSION_ERROR,
-                    ErrorMessage.RECONVERSION_ERROR, HttpStatus.BAD_REQUEST.name());
+            throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.RECONVERSION_ERROR,
+                                        ErrorMessage.RECONVERSION_ERROR, HttpStatus.BAD_REQUEST.name());
         }
         try {
-            return VehiculoElectricoDTOUtil.toDTO(vehiculoRepository.save(VehiculoElectricoDTOUtil.toEntity(dto)));
+            VehiculoElectrico vehiculo = VehiculoElectricoDTOUtil.toEntity(dto);
+            vehiculo.setId(id);
+            return VehiculoElectricoDTOUtil.toDTO(vehiculoElectricoRepository.save(vehiculo));
         }catch (IllegalArgumentException exc){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.VALIDATION_PARAMS,
                     ErrorMessage.VALIDATION_PARAMS, HttpStatus.BAD_REQUEST.name());
