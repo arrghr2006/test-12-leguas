@@ -18,7 +18,8 @@ import lombok.*;
 
 public class Vehiculo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "serial")
     private Integer id;
 
     @Column( unique = true, length = 10, nullable = false)

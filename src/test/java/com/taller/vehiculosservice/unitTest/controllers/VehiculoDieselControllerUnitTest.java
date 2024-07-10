@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.taller.vehiculosservice.controller.VehiculoDieselController;
 import com.taller.vehiculosservice.data.DataDTOTest;
-import com.taller.vehiculosservice.model.dto.VehiculoDieselDTO;
+import com.taller.vehiculosservice.model.dto.VehiculoDieselResponseDTO;
 import com.taller.vehiculosservice.model.enumtypes.TipoBombaInyeccionEnum;
 import com.taller.vehiculosservice.service.VehiculoDieselService;
 import org.hamcrest.Matchers;
@@ -54,7 +54,7 @@ class VehiculoDieselControllerUnitTest {
     @Test
     void should_find_all_VehiculoDiesels() throws Exception {
         // Given
-        List<VehiculoDieselDTO> vehiculoDieselList = List.of(DataDTOTest.vehDDTO01(), DataDTOTest.vehDDTO02());
+        List<VehiculoDieselResponseDTO> vehiculoDieselList = List.of(DataDTOTest.vehDDTO01(), DataDTOTest.vehDDTO02());
         when(this.vehiculoDieselService.getAll()).thenReturn(vehiculoDieselList);
 
         // When

@@ -19,4 +19,5 @@ public class VehiculoResponseDTO {
     private Boolean reconvertir = false;
 
     private String tipoReconvertido;
+
 }
