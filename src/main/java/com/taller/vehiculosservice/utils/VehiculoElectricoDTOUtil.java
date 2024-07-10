@@ -23,20 +23,6 @@ public class VehiculoElectricoDTOUtil {
         return dto;
     }
 
-    public static VehiculoElectricoResponseDTO toResponseDTO(VehiculoElectrico entity){
-        VehiculoElectricoResponseDTO dto = new VehiculoElectricoResponseDTO();
-        dto.setId(entity.getId());
-        dto.setVin(entity.getVin());
-        dto.setMatricula(entity.getMatricula());
-        dto.setTipo(entity.getTipo().toString());
-        dto.setCorriente(entity.getCorriente());
-        dto.setVoltaje(entity.getVoltaje());
-        dto.setTipoBateria(entity.getTipoBateria().toString());
-        dto.setReconvertir(entity.getReconvertir());
-        dto.setTipoReconvertido( entity.getTipoReconvertido()!=null ? entity.getTipoReconvertido().toString() : null);
-        return dto;
-    }
-
     public static VehiculoElectrico toEntity(VehiculoElectricoDTO dto){
         VehiculoElectrico entity = new VehiculoElectrico();
         entity.setVin(dto.getVin());
