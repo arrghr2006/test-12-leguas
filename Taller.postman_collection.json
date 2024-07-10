@@ -12,14 +12,14 @@
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Transfer-Encoding",
-						"value": "application/json",
+						"key": "Content-Type",
+						"value": "application/vnd.api+json",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"matricula\": \"B73049\",\r\n    \"vin\": \"17265\",\r\n    \"tipoBateria\" : \"LITIO\",\r\n    \"corriente\": 16,\r\n    \"voltaje\" : 370,\r\n    \"reconvertir\": true,\r\n    \"tipoReconvertido\" : \"GASOLINA\",\r\n    \"matriculaReconvertido\": \"B77049\"\r\n}",
+					"raw": "{\r\n    \"vin\":\"1278111\",\r\n    \"matricula\": \"B78948\",\r\n    \"tipoBateria\": \"LITIO\",\r\n    \"corriente\": 16,\r\n    \"voltaje\": 260,\r\n    \"reconvertir\": true,\r\n    \"tipoReconvertido\": \"gasolina\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,7 +96,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8088/vehiculoElectrico/2",
+					"raw": "http://localhost:8088/vehiculoElectrico/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -104,7 +104,7 @@
 					"port": "8088",
 					"path": [
 						"vehiculoElectrico",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -123,7 +123,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"vin\":\"11129\",\r\n    \"matricula\": \"B76333\",\r\n    \"tipoBombaInyeccion\": \"nueva\"\r\n}",
+					"raw": "{\r\n    \"vin\":\"15429\",\r\n    \"matricula\": \"B88333\",\r\n    \"tipoBombaInyeccion\": \"rotatoria\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -157,7 +157,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"vin\":\"11129\",\r\n    \"matricula\": \"B76333\",\r\n    \"tipoBombaInyeccion\": \"nueva\"\r\n}",
+					"raw": "{\r\n    \"vin\":\"11129\",\r\n    \"matricula\": \"B76333\",\r\n    \"tipoBombaInyeccion\": \"ROTAToria\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -165,7 +165,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8088/vehiculoDiesel/4",
+					"raw": "http://localhost:8088/vehiculoDiesel/152",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -173,7 +173,7 @@
 					"port": "8088",
 					"path": [
 						"vehiculoDiesel",
-						"4"
+						"152"
 					]
 				}
 			},
@@ -200,7 +200,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8088/vehiculoDiesel/4",
+					"raw": "http://localhost:8088/vehiculoDiesel/152",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -208,7 +208,7 @@
 					"port": "8088",
 					"path": [
 						"vehiculoDiesel",
-						"4"
+						"152"
 					]
 				}
 			},
@@ -304,7 +304,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8088/vehiculoGasolina/3",
+					"raw": "http://localhost:8088/vehiculoGasolina/153",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -312,7 +312,7 @@
 					"port": "8088",
 					"path": [
 						"vehiculoGasolina",
-						"3"
+						"153"
 					]
 				}
 			},

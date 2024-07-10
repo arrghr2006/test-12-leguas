@@ -2,11 +2,10 @@ package com.taller.vehiculosservice.model.dto;
 
 import com.taller.vehiculosservice.model.enumtypes.TipoBateriaEnum;
 import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class VehiculoElectricoReconvertirOutDTO extends VehiculoDTOOut{
 
     private TipoBateriaEnum tipoBateria;

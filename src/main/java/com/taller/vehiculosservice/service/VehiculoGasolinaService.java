@@ -4,12 +4,11 @@ import com.taller.vehiculosservice.exception.ErrorCode;
 import com.taller.vehiculosservice.exception.ErrorMessage;
 import com.taller.vehiculosservice.exception.RequestException;
 import com.taller.vehiculosservice.model.dto.VehiculoGasolinaDTO;
+import com.taller.vehiculosservice.model.dto.VehiculoGasolinaResponseDTO;
 import com.taller.vehiculosservice.model.persistencia.Vehiculo;
-import com.taller.vehiculosservice.model.persistencia.VehiculoElectrico;
 import com.taller.vehiculosservice.model.persistencia.VehiculoGasolina;
 import com.taller.vehiculosservice.repository.VehiculoGasolinaRepository;
 import com.taller.vehiculosservice.repository.VehiculoRepository;
-import com.taller.vehiculosservice.utils.VehiculoElectricoDTOUtil;
 import com.taller.vehiculosservice.utils.VehiculoGasolinaDTOUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,20 +25,20 @@ public class VehiculoGasolinaService implements VehiculoGasolinaServiceInterface
     private final VehiculoGasolinaRepository vehiculoGasolinaRepository;
     private final VehiculoRepository vehiculoRepository;
 
-    public List<VehiculoGasolinaDTO> getAll(){
-        return vehiculoGasolinaRepository.findAll().stream().map(VehiculoGasolinaDTOUtil::toDTO).toList();
+    public List<VehiculoGasolinaResponseDTO> getAll(){
+        return vehiculoGasolinaRepository.findAll().stream().map(VehiculoGasolinaDTOUtil::toResponseDTO).toList();
     }
 
-    public VehiculoGasolinaDTO getById(Integer id) throws RequestException {
+    public VehiculoGasolinaResponseDTO getById(Integer id) throws RequestException {
         Optional<VehiculoGasolina> inventory = vehiculoGasolinaRepository.findById(id);
         if(inventory.isEmpty()) {
             throw new RequestException( ErrorCode.VEHICLE_NOT_FOUND, ErrorMessage.VEHICLE_NOT_FOUND,
                                         ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.NOT_FOUND.name());
         }
-        return inventory.map(VehiculoGasolinaDTOUtil::toDTO).get();
+        return inventory.map(VehiculoGasolinaDTOUtil::toResponseDTO).get();
     }
 
-    public VehiculoGasolinaDTO create(VehiculoGasolinaDTO dto) throws RequestException {
+    public VehiculoGasolinaResponseDTO create(VehiculoGasolinaDTO dto) throws RequestException {
         Optional<Vehiculo> entity = vehiculoRepository.findVehiculoByVinMatricula(dto.getVin(), dto.getMatricula());
         if(entity.isPresent()){
             throw new RequestException( ErrorCode.DUPLICATED_VEHICLE, ErrorMessage.DUPLICATED_VEHICLE,
@@ -50,14 +49,14 @@ public class VehiculoGasolinaService implements VehiculoGasolinaServiceInterface
                                         ErrorMessage.RECONVERSION_NO_PERMITIDA, HttpStatus.BAD_REQUEST.name());
         }
         try {
-            return VehiculoGasolinaDTOUtil.toDTO(vehiculoGasolinaRepository.save(VehiculoGasolinaDTOUtil.toEntity(dto)));
+            return VehiculoGasolinaDTOUtil.toResponseDTO(vehiculoGasolinaRepository.save(VehiculoGasolinaDTOUtil.toEntity(dto)));
         }catch (DataIntegrityViolationException exc){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.VALIDATION_PARAMS,
                                         ErrorMessage.VALIDATION_PARAMS, HttpStatus.BAD_REQUEST.name());
         }
     }
 
-    public VehiculoGasolinaDTO update(Integer id, VehiculoGasolinaDTO dto) throws RequestException {
+    public VehiculoGasolinaResponseDTO update(Integer id, VehiculoGasolinaDTO dto) throws RequestException {
         Optional<VehiculoGasolina> entity = vehiculoGasolinaRepository.findById(id);
         if(entity.isEmpty()){
             throw new RequestException( ErrorCode.VEHICLE_NOT_FOUND, ErrorMessage.VEHICLE_NOT_FOUND,
@@ -70,7 +69,7 @@ public class VehiculoGasolinaService implements VehiculoGasolinaServiceInterface
         try {
             VehiculoGasolina vehiculo = VehiculoGasolinaDTOUtil.toEntity(dto);
             vehiculo.setId(id);
-            return VehiculoGasolinaDTOUtil.toDTO(vehiculoGasolinaRepository.save(vehiculo));
+            return VehiculoGasolinaDTOUtil.toResponseDTO(vehiculoGasolinaRepository.save(vehiculo));
         }catch (DataIntegrityViolationException exc){
             throw new RequestException( ErrorCode.BAD_REQUEST, ErrorMessage.VALIDATION_PARAMS,
                                         ErrorMessage.VALIDATION_PARAMS, HttpStatus.BAD_REQUEST.name());
@@ -79,7 +78,7 @@ public class VehiculoGasolinaService implements VehiculoGasolinaServiceInterface
 
     public void delete(Integer id) throws RequestException {
         Optional<VehiculoGasolina> entity = vehiculoGasolinaRepository.findById(id);
-        if(!entity.isEmpty()){
+        if(entity.isEmpty()){
             throw new RequestException( ErrorCode.VEHICLE_NOT_FOUND, ErrorMessage.VEHICLE_NOT_FOUND,
                                         ErrorMessage.VEHICLE_NOT_FOUND, HttpStatus.NOT_FOUND.name());
         }

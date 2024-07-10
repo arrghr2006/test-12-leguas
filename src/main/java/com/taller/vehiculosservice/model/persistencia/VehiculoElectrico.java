@@ -3,13 +3,11 @@ package com.taller.vehiculosservice.model.persistencia;
 import com.taller.vehiculosservice.model.enumtypes.TipoBateriaEnum;
 import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "vehiculo_electrico", schema="public")
 @DiscriminatorValue(value="ELECTRICO")
@@ -32,6 +30,10 @@ public class VehiculoElectrico extends Vehiculo{
         this.setTipoBateria(tipoBateria);
         this.setVoltaje(voltBat);
         this.setCorriente(corrienteBateria);
+    }
+
+    public VehiculoElectrico(){
+        super( TipoVehiculoEnum.ELECTRICO );
     }
 
 }

@@ -2,11 +2,10 @@ package com.taller.vehiculosservice.model.persistencia;
 
 import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -19,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 public class Vehiculo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column( unique = true, length = 10, nullable = false)
@@ -46,5 +45,10 @@ public class Vehiculo {
         this.setTipo(type);
         this.setReconvertir(aReconvertir);
         this.setTipoReconvertido(newTipo);
+    }
+
+    public Vehiculo(TipoVehiculoEnum type){
+        super();
+        this.setTipo(type);
     }
 }

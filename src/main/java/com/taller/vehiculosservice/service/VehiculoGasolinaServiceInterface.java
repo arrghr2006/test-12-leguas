@@ -2,18 +2,19 @@ package com.taller.vehiculosservice.service;
 
 import com.taller.vehiculosservice.exception.RequestException;
 import com.taller.vehiculosservice.model.dto.VehiculoGasolinaDTO;
+import com.taller.vehiculosservice.model.dto.VehiculoGasolinaResponseDTO;
 
 import java.util.List;
 
 public interface VehiculoGasolinaServiceInterface {
 
-    public List<VehiculoGasolinaDTO> getAll();
+    List<VehiculoGasolinaResponseDTO> getAll();
 
-    public VehiculoGasolinaDTO getById(Integer id) throws RequestException;
+    VehiculoGasolinaResponseDTO getById(Integer id) throws RequestException;
 
-    public VehiculoGasolinaDTO create(VehiculoGasolinaDTO dto) throws RequestException;
+    VehiculoGasolinaResponseDTO create(VehiculoGasolinaDTO dto) throws RequestException;
 
-    public VehiculoGasolinaDTO update(Integer id, VehiculoGasolinaDTO dto) throws RequestException;
+    VehiculoGasolinaResponseDTO update(Integer id, VehiculoGasolinaDTO dto) throws RequestException;
 
-    public void delete(Integer id) throws RequestException;
+    void delete(Integer id) throws RequestException;
 }

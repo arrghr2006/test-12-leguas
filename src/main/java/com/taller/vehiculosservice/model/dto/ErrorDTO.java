@@ -1,11 +1,10 @@
 package com.taller.vehiculosservice.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Builder
 public class ErrorDTO {

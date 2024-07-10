@@ -5,13 +5,16 @@ import com.taller.vehiculosservice.model.dto.VehiculoElectricoResponseDTO;
 import com.taller.vehiculosservice.model.enumtypes.TipoBateriaEnum;
 import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
 import com.taller.vehiculosservice.model.persistencia.VehiculoElectrico;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class VehiculoElectricoDTOUtil {
 
-    public static VehiculoElectricoDTO toDTO(VehiculoElectrico entity){
-        VehiculoElectricoDTO dto = new VehiculoElectricoDTO();
+    public static VehiculoElectricoResponseDTO toResponseDTO(VehiculoElectrico entity){
+        VehiculoElectricoResponseDTO dto = new VehiculoElectricoResponseDTO();
+        dto.setId(entity.getId());
         dto.setVin(entity.getVin());
         dto.setMatricula(entity.getMatricula());
         dto.setTipo(entity.getTipo().toString());

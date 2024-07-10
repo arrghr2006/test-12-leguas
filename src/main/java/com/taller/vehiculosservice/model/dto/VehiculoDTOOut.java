@@ -1,10 +1,12 @@
 package com.taller.vehiculosservice.model.dto;
 
 import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public abstract class VehiculoDTOOut {
 

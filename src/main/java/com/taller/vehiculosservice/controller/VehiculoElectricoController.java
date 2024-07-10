@@ -1,6 +1,7 @@
 package com.taller.vehiculosservice.controller;
 
 import com.taller.vehiculosservice.exception.RequestException;
+import com.taller.vehiculosservice.model.dto.VehiculoElectricoResponseDTO;
 import com.taller.vehiculosservice.payload.MessageResponse;
 import com.taller.vehiculosservice.service.VehiculoElectricoService;
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ public class VehiculoElectricoController {
 
     @GetMapping
     public ResponseEntity<MessageResponse> getAll(){
-        List<VehiculoElectricoDTO> listado = vehiculoService.getAll();
+        List<VehiculoElectricoResponseDTO> listado = vehiculoService.getAll();
         return listado!=null && !listado.isEmpty()
             ? new ResponseEntity<>( MessageResponse.builder().status(HttpStatus.OK).object(listado).message("Listado de inventarios de libros").build(),
                                     HttpStatus.OK)
@@ -31,7 +32,7 @@ public class VehiculoElectricoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MessageResponse> getById(@PathVariable Integer id) throws RequestException {
-        VehiculoElectricoDTO dto = vehiculoService.getById(id);
+        VehiculoElectricoResponseDTO dto = vehiculoService.getById(id);
         return dto!=null
                 ? new ResponseEntity<>( MessageResponse.builder().status(HttpStatus.OK).object(dto).message(null).build(),
                 HttpStatus.OK)
@@ -40,15 +41,20 @@ public class VehiculoElectricoController {
     }
     @PostMapping
     public ResponseEntity<MessageResponse> create(@RequestBody @Valid VehiculoElectricoDTO dto) throws RequestException {
-        VehiculoElectricoDTO resultado = vehiculoService.create(dto);
+        VehiculoElectricoResponseDTO resultado = vehiculoService.create(dto);
         return new ResponseEntity<>( MessageResponse.builder().status(HttpStatus.OK).object(resultado).message(null).build(), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> update( @PathVariable Integer id,
                                                    @RequestBody @Valid VehiculoElectricoDTO dto) throws RequestException{
-        VehiculoElectricoDTO resultado = vehiculoService.update(id, dto);
+        VehiculoElectricoResponseDTO resultado = vehiculoService.update(id, dto);
         return new ResponseEntity<>( MessageResponse.builder().status(HttpStatus.OK).object(resultado).message(null).build(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MessageResponse> eliminar(@PathVariable Integer id) {
+        vehiculoService.delete(id);
+        return new ResponseEntity<>( MessageResponse.builder().status(HttpStatus.OK).object(null).message("Se eliminó el vehiculo correctamente").build(), HttpStatus.OK);
+    }
 }

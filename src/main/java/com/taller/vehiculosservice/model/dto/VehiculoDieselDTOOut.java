@@ -2,12 +2,10 @@ package com.taller.vehiculosservice.model.dto;
 
 import com.taller.vehiculosservice.model.enumtypes.TipoBombaInyeccionEnum;
 import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class VehiculoDieselDTOOut extends VehiculoDTOOut{
 
     private String matricula;
