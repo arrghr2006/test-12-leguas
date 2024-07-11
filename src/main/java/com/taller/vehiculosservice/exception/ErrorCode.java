@@ -6,6 +6,7 @@ public class ErrorCode {
     public static final String BAD_REQUEST = "I-03";
     public static final String DUPLICATED_VEHICLE = "I-04";
     public static final String RECONVERSION_NO_PERMITIDA = "I-05";
+    public static final String NO_VALID_DATA = "I-06";
 
     private ErrorCode(){
         throw new IllegalStateException("Utility class");

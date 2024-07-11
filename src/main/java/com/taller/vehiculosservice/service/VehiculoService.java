@@ -4,7 +4,6 @@ import com.taller.vehiculosservice.exception.ErrorCode;
 import com.taller.vehiculosservice.exception.ErrorMessage;
 import com.taller.vehiculosservice.exception.RequestException;
 import com.taller.vehiculosservice.model.dto.*;
-import com.taller.vehiculosservice.model.enumtypes.TipoVehiculoEnum;
 import com.taller.vehiculosservice.model.persistencia.Vehiculo;
 import com.taller.vehiculosservice.repository.VehiculoRepository;
 import com.taller.vehiculosservice.utils.VehiculoDTOUtil;
@@ -26,25 +25,20 @@ public class VehiculoService implements VehiculoServiceInterface {
         List<Object[]> listado = vehiculoRepository.listarTodos();
         List<VehiculoDTOOut> resultadoList = new ArrayList<>();
 
-        Boolean reconvertir;
-        String tipoReconvertido;
-
         if(listado!=null && !listado.isEmpty()){
-            for(Object[] itemList :listado ){
-                reconvertir = (Boolean)(itemList[1]);
-                tipoReconvertido = itemList[2]!=null ? itemList[2].toString() : null;
-                if(itemList[0].toString().equals(TipoVehiculoEnum.DIESEL.toString())){
-                    resultadoList.add( new VehiculoDieselDTOOut(itemList[3].toString()));
-                }
-                else if(itemList[0].toString().equals(TipoVehiculoEnum.ELECTRICO.toString())){
-                    if(reconvertir.equals(Boolean.TRUE) && tipoReconvertido!=null) {
-                        resultadoList.add(new VehiculoElectricoReconvertirOutDTO(tipoReconvertido, itemList[3].toString()));
-                    } else {
-                        resultadoList.add(new VehiculoElectricoDTOOut(itemList[3].toString()));
+            listado.forEach(
+                    array -> {
+                        switch (array[0].toString()) {
+                            case "DIESEL" -> resultadoList.add( new VehiculoDieselDTOOut(array[3].toString()));
+                            case "GASOLINA" -> resultadoList.add(new VehiculoGasolinaDTOOut(array[3].toString()));
+                            case "ELECTRICO" ->resultadoList.add( ((array[1]).equals(Boolean.TRUE) && array[2]!=null)
+                                                                    ? new VehiculoElectricoReconvertirOutDTO(array[2].toString(), array[3].toString())
+                                                                    : new VehiculoElectricoDTOOut(array[3].toString()) );
+                            default -> throw new RequestException( ErrorCode.NO_VALID_DATA, ErrorMessage.NO_VALID_DATA,
+                                                                   ErrorMessage.NO_VALID_DATA, HttpStatus.INTERNAL_SERVER_ERROR.name());
+                        }
                     }
-                }
-                else resultadoList.add(new VehiculoGasolinaDTOOut(itemList[3].toString()));
-            }
+            );
         }
         return resultadoList;
     }

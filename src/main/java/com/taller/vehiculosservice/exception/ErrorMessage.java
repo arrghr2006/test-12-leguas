@@ -8,6 +8,7 @@ public class ErrorMessage {
     public static final String INTERNAL_ERROR = "Error interno en la operación";
     public static final String RECONVERSION_ERROR = "Debe especificar el tipo de combustible después de la reconversión;";
     public static final String RECONVERSION_NO_PERMITIDA = "Solo se permiten reconversiones de Eléctricos a Gasolina.";
+    public static final String NO_VALID_DATA = "Datos inconsistentes en base de datos.";
 
     private ErrorMessage(){
         throw new IllegalStateException("Utility class");
